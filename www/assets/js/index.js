@@ -22,6 +22,21 @@ var updateTime = function() {
 	});
 };
 
+var updateNotifications = function() {
+	var id;
+	var icon;
+
+	[].forEach.call(main.querySelectorAll('ul li'), function(node) {
+		id = node.getAttribute('data-id');
+
+		if(storage.filter('notifies', { id: parseInt(id) }).length > 0) {
+			icon = node.querySelector('.icon');
+
+			addNotification(icon, id);
+		}
+	});
+};
+
 var updateProgress = function() {
 	var item     = data.schedule[0];
 	var done     = (moment().format('X') - moment(item.timeStart).format('X'));
@@ -49,19 +64,21 @@ var toggleNotification = function(node, id) {
 	if(notifies[id] !== undefined) {
 		deleteNotification(icon, id);
 	} else {
+		storage.add('notifies', { id: parseInt(id) });
 		addNotification(icon, id);
 	}
 };
 
-deleteNotification = function(icon, id) {
+var deleteNotification = function(icon, id) {
 	notifies[id] = undefined;
 
 	clearInterval(notifies[id]);
 
+	storage.deleteFilter('notifies', { id: parseInt(id) });
 	icon.classList.remove('ion-android-notifications');
 };
 
-addNotification = function(icon, id) {
+var addNotification = function(icon, id) {
 	var item  = getItem(id);
 	var sleep = (moment(item.timeStart).format('X') - moment().format('X')) * 1000;
 
@@ -96,6 +113,7 @@ ipc.on('schedule', function(json) {
 
 	updateTime();
 	updateProgress();
+	updateNotifications();
 });
 
 update();

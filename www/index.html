@@ -19,7 +19,7 @@
 		<script id="tpl-list" type="x-tmpl-mustache">
 			<ul class="list">
 				{{#schedule}}
-				<li class="item item-icon-right" onclick="toggleNotification(this, {{id}})">
+				<li data-id="{{id}}" class="item item-icon-right" onclick="toggleNotification(this, {{id}})">
 					<i class="icon"></i>
 					{{title}}
 					<time datetime="{{timeStart}}" class="item-note">{{time}}</time><br>
@@ -33,6 +33,7 @@
 			</ul>
 		</script>
 
+		<script src="assets/js/storage.js"></script>
 		<script src="assets/js/index.js"></script>
 	</body>
 </html>
