@@ -1,0 +1,11 @@
+exports.api = {
+	user: '',
+	salt: '',
+	id: '00000000-0000-0000-0000-000000000000'
+};
+
+exports.menubar = {
+	index: 'file://' + process.cwd() + '/www/index.html'
+};
+
+exports.stream = 'https://twitch.tv/rocketbeanstv';

@@ -1,0 +1,38 @@
+<html>
+	<head>
+		<title>YARBS</title>
+		<link rel="stylesheet" href="http://code.ionicframework.com/1.0.1/css/ionic.min.css">
+		<link rel="stylesheet" href="assets/css/index.css">
+	</head>
+	<body>
+		<div id="main">
+			<div></div>
+
+			<footer class="tabs-background-assertive tabs-color-light">
+				<div class="tabs">
+					<a class="tab-item" onclick="toggleView()">Show</a>
+					<a class="tab-item" onclick="update()">Update</a>
+				</div>
+			</footer>
+		</div>
+
+		<script id="tpl-list" type="x-tmpl-mustache">
+			<ul class="list">
+				{{#schedule}}
+				<li class="item item-icon-right" onclick="toggleNotification(this, {{id}})">
+					<i class="icon"></i>
+					{{title}}
+					<time datetime="{{timeStart}}" class="item-note">{{time}}</time><br>
+					<small class="show">{{show}} {{type}} {{game}}</small>
+					<!--
+					{{#live}}<span class="badge badge-balanced">Live</span>{{/live}}
+					{{#premiere}}<span class="badge badge-assertive">Premiere</span>{{/premiere}}
+					-->
+				</li>
+				{{/schedule}}
+			</ul>
+		</script>
+
+		<script src="assets/js/index.js"></script>
+	</body>
+</html>
