@@ -5,7 +5,8 @@ var mustache = require('mustache');
 var data     = {};
 var notifies = [];
 var style    = document.createElement('style');
-var main     = document.querySelector('#main div');
+var main     = document.querySelector('#main');
+var viewIcon = document.querySelector('.icon-toggle-view');
 var tpls     = {
 	list: document.querySelector('#tpl-list').innerHTML
 };
@@ -30,9 +31,7 @@ var updateNotifications = function() {
 		id = node.getAttribute('data-id');
 
 		if(storage.filter('notifies', { id: parseInt(id) }).length > 0) {
-			icon = node.querySelector('.icon');
-
-			addNotification(icon, id);
+			addNotification(node, id);
 		}
 	});
 };
@@ -51,25 +50,47 @@ var update = function() {
 };
 
 var toggleView = function() {
-	if(style.sheet.rules.length > 0) {
-		style.sheet.deleteRule(0);
-	} else {
+	var view = storage.get('view') || 'simple';
+
+	if(view == 'simple') {
+		view = 'all';
+	} else if(view == 'all') {
+		view = 'simple';
+	}
+
+	setView(view);
+};
+
+var setView = function(view) {
+	if(view == 'simple') {
 		style.sheet.insertRule('.show { display: none; }', 0);
+
+		storage.set('view', view);
+		viewIcon.classList.add('ion-ios-glasses-outline');
+		viewIcon.classList.remove('ion-ios-glasses');
+	} else if(view == 'all') {
+		if(style.sheet.rules.length > 0) {
+			style.sheet.deleteRule(0);
+		}
+
+		storage.set('view', view);
+		viewIcon.classList.add('ion-ios-glasses');
+		viewIcon.classList.remove('ion-ios-glasses-outline');
 	}
 };
 
 var toggleNotification = function(node, id) {
-	var icon = node.querySelector('.icon');
-
 	if(notifies[id] !== undefined) {
-		deleteNotification(icon, id);
+		deleteNotification(node, id);
 	} else {
 		storage.add('notifies', { id: parseInt(id) });
-		addNotification(icon, id);
+		addNotification(node, id);
 	}
 };
 
-var deleteNotification = function(icon, id) {
+var deleteNotification = function(node, id) {
+	var icon = node.querySelector('.icon');
+
 	notifies[id] = undefined;
 
 	clearInterval(notifies[id]);
@@ -78,7 +99,8 @@ var deleteNotification = function(icon, id) {
 	icon.classList.remove('ion-android-notifications');
 };
 
-var addNotification = function(icon, id) {
+var addNotification = function(node, id) {
+	var icon  = node.querySelector('.icon');
 	var item  = getItem(id);
 	var sleep = (moment(item.timeStart).format('X') - moment().format('X')) * 1000;
 
@@ -114,6 +136,7 @@ ipc.on('schedule', function(json) {
 	updateTime();
 	updateProgress();
 	updateNotifications();
+	setView(storage.get('view') || 'simple');
 });
 
 update();
