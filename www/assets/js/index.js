@@ -70,7 +70,9 @@ var setView = function(view) {
 		viewIcon.classList.remove('ion-ios-glasses');
 	} else if(view == 'all') {
 		if(style.sheet.rules.length > 0) {
-			style.sheet.deleteRule(0);
+			for(var i = style.sheet.rules.length - 1; i >= 0; i--) {
+				style.sheet.deleteRule(i);
+			}
 		}
 
 		storage.set('view', view);
