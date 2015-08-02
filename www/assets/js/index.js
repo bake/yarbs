@@ -1,4 +1,5 @@
 var ipc      = require('ipc');
+var shell    = require('shell');
 var moment   = require('moment');
 var mustache = require('mustache');
 
@@ -12,6 +13,16 @@ var tpls     = {
 };
 
 document.head.appendChild(style);
+
+var initLinks = function() {
+	[].forEach.call(document.querySelectorAll('a[target=_blank]'), function(link) {
+		link.onclick = function(event) {
+			event.preventDefault();
+
+			shell.openExternal(this.href);
+		}
+	});
+};
 
 var updateTime = function() {
 	var time;
@@ -142,6 +153,7 @@ ipc.on('schedule', function(json) {
 });
 
 update();
+initLinks();
 
 setInterval(function() {
 	updateTime();
