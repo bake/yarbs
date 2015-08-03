@@ -1,6 +1,6 @@
 {
   "name": "yarbs",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "yet another rocketbeanstv sendeplan",
   "main": "main.js",
   "dependencies": {
@@ -12,10 +12,13 @@
     "node-notifier": "^4.2.3",
     "sha1-hex": ""
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "electron-prebuilt": "^0.30.2",
+    "electron-packager": "^5.0.1"
+  },
   "scripts": {
-    "build": "electron-packager . Example --platform=darwin --arch=x64 --version=0.26.0 --ignore=node_modules/electron --icon=Icon.icns",
-    "start": "electron --debug ."
+    "build": "electron-packager . yarbs --platform=darwin --arch=x64 --version=0.30.2 --ignore=node_modules/electron-* --icon=www/icon/Icon.icns --overwrite",
+    "start": "electron ."
   },
   "author": "bake",
   "license": "WTFPL"
