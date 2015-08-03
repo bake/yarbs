@@ -18,10 +18,4 @@ ipc.on('notify', function(event, item) {
   });
 });
 
-menubar(config.menubar).on('ready', function ready () {
-  console.log('app is ready');
-});
-
-notify.on('click', function() {
-  shell.openExternal(config.stream);
-});
+menubar(config.menubar);
