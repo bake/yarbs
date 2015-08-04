@@ -14,7 +14,8 @@ ipc.on('schedule', function(event) {
 ipc.on('notify', function(event, item) {
   notify.notify({
     title: item.title,
-    message: item.show
+    message: item.show,
+    sound: true
   });
 });
 

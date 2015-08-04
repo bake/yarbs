@@ -24,6 +24,24 @@ var initLinks = function() {
 	});
 };
 
+var initTimer = function(item) {
+	var timeEnd = (moment(item.timeEnd).format('X') - moment().format('X')) * 1000;
+
+	setTimeout(function() {
+		var list = main.querySelector('.list');
+		var node = list.querySelector('.item');
+
+		data.schedule.splice(0, 1);
+		initTimer(data.schedule[0]);
+		deleteNotification(node, item.id);
+		list.removeChild(node);
+
+		if(storage.filter('notifies', { id: data.schedule[0].id }).length > 0) {
+			deleteNotification(list.querySelector('.item'), data.schedule[0].id);
+		}
+	}, timeEnd);
+};
+
 var updateTime = function() {
 	var time;
 
@@ -61,7 +79,14 @@ var update = function() {
 };
 
 var toggleView = function() {
-	var view = storage.get('view') || 'simple';
+	var view = storage.get('view');
+
+	if(view.length == 0) {
+		view = 'simple';
+		storage.set('view', view);
+	}
+
+	console.log(view);
 
 	if(view == 'simple') {
 		view = 'all';
@@ -150,6 +175,7 @@ ipc.on('schedule', function(json) {
 	updateTime();
 	updateProgress();
 	updateNotifications();
+	initTimer(data.schedule[0]);
 	setView(storage.get('view') || 'simple');
 });
 
