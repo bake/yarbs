@@ -1,3 +1,4 @@
 node_modules/
 electron/
+yarbs-darwin-x64/
 config.js
