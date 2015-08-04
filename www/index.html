@@ -24,9 +24,16 @@
 				{{#schedule}}
 				<li data-id="{{id}}" class="item item-icon-right" onclick="toggleNotification(this, {{id}})">
 					<i class="icon"></i>
+
 					{{title}}
-					<time datetime="{{timeStart}}" class="item-note">{{time}}</time><br>
+
+					<span class="item-note">
+						<time datetime="{{timeStart}}">{{relative}}</time><br>
+						<small>{{time}}</small>
+					</span>
+
 					<small class="show">{{show}} {{type}} {{game}}</small>
+
 					<!--
 					{{#live}}<span class="badge badge-balanced">Live</span>{{/live}}
 					{{#premiere}}<span class="badge badge-assertive">Premiere</span>{{/premiere}}
