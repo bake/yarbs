@@ -97,7 +97,7 @@ var toggleView = function() {
 
 var setView = function(view) {
 	if(view == 'simple') {
-		style.sheet.insertRule('.show { display: none; }', 0);
+		style.sheet.insertRule('.item .show { height: 0!important; opacity: 0; }', 0);
 
 		storage.set('view', view);
 		viewIcon.classList.add('ion-ios-glasses-outline');
