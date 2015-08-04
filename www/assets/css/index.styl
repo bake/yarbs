@@ -1,26 +1,32 @@
 // out: index.css, sourcemap: true, compress: true
 
-body
+html, body, #main
 	height 100%
-	overflow-y scroll
+
+body
 	background #444
 
 #main
+	overflow-y scroll
 	padding-bottom 44px
 
 .list
-	&, li
+	&, .item
 		color #fff
 		border-color rgba(0, 0, 0, .15)
-		background #444
+		background transparent
+
+		.show
+			overflow hidden
+			display block
+			height 18px
+			transition all .15s
 
 	.item-note
 		text-align right
 
 .tabs
 	.tab-item
-		padding-top 7px
-
 		&:hover
 			color #fff
 			background rgba(0, 0, 0, .1)
