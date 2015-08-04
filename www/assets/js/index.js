@@ -74,7 +74,7 @@ var toggleView = function() {
 
 var setView = function(view) {
 	if(view == 'simple') {
-		style.sheet.insertRule('.show { display: none; }', 0);
+		style.sheet.insertRule('small { display: none; }', 0);
 
 		storage.set('view', view);
 		viewIcon.classList.add('ion-ios-glasses-outline');
@@ -139,7 +139,8 @@ ipc.on('schedule', function(json) {
 	data = JSON.parse(json);
 
 	data.schedule.forEach(function(item) {
-		item.time = moment(item.timeStart).fromNow();
+		item.time = moment(item.timeStart).format('H:mm');
+		item.relative = moment(item.timeStart).fromNow();
 		item.live = ~item.type.indexOf('live');
 		item.premiere = ~item.type.indexOf('premiere');
 	});
