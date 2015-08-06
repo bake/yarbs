@@ -37,12 +37,15 @@ var initTimer = function(item) {
 
 		if(data.schedule.length > 0) {
 			initTimer(data.schedule[0]);
+			ipc.send('icon', data.schedule[0].icon);
 
 			if(storage.filter('notifies', { id: data.schedule[0].id }).length > 0) {
 				ipc.send('notify', data.schedule[0]);
 				storage.deleteFilter('notifies', { id: data.schedule[0].id });
 				hideNotification(list.querySelector('.item'), data.schedule[0].id);
 			}
+		} else {
+			ipc.send('icon', '');
 		}
 	}, timeEnd);
 };
@@ -154,6 +157,7 @@ ipc.on('schedule', function(json) {
 		item.relative = moment(item.timeStart).fromNow();
 		item.live     = ~item.type.indexOf('live');
 		item.premiere = ~item.type.indexOf('premiere');
+		item.icon     = (item.live) ? 'live' : (item.premiere) ? 'premiere' : 'icon';
 	});
 
 	main.innerHTML = mustache.render(listTpl, data);
@@ -163,6 +167,8 @@ ipc.on('schedule', function(json) {
 	updateNotifications();
 	initTimer(data.schedule[0]);
 	setView(storage.get('view') || 'simple');
+
+	ipc.send('icon', data.schedule[0].icon);
 });
 
 update();
