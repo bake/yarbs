@@ -29,10 +29,9 @@ var initTimer = function(item) {
 
 	timer = setTimeout(function() {
 		var list = main.querySelector('.list');
-		var node = list.querySelector('.item');
 
 		if(data.schedule.length > 0) {
-			list.removeChild(node);
+			list.removeChild(list.querySelector('.item'));
 			data.schedule.splice(0, 1);
 		}
 
@@ -41,7 +40,8 @@ var initTimer = function(item) {
 
 			if(storage.filter('notifies', { id: data.schedule[0].id }).length > 0) {
 				ipc.send('notify', data.schedule[0]);
-				hideNotification(node, data.schedule[0].id);
+				storage.deleteFilter('notifies', { id: data.schedule[0].id });
+				hideNotification(list.querySelector('.item'), data.schedule[0].id);
 			}
 		}
 	}, timeEnd);
