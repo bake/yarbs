@@ -5,6 +5,8 @@ var notify  = require('node-notifier');
 var rbtv    = require('./rbtv');
 var config  = require('./config');
 
+var mb = menubar(config.menubar);
+
 ipc.on('schedule', function(event) {
   rbtv.get('schedule', function(json) {
   	event.sender.send('schedule', json);
@@ -19,4 +21,6 @@ ipc.on('notify', function(event, item) {
   });
 });
 
-menubar(config.menubar);
+ipc.on('icon', function(event, icon) {
+  mb.tray.setImage(config.icons[icon]);
+});

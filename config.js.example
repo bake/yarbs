@@ -4,9 +4,16 @@ exports.api = {
 	id: '00000000-0000-0000-0000-000000000000'
 };
 
+exports.icons = {
+	icon: __dirname + '/www/assets/icon/IconTemplate.png',
+	live: __dirname + '/www/assets/icon/IconTemplate_Red.png',
+	premiere: __dirname + '/www/assets/icon/IconTemplate_Green.png'
+};
+
 exports.menubar = {
-	'always-on-top': true,
-	'index': 'file://' + __dirname + '/www/index.html'
+	icon: exports.icons.icon,
+	index: 'file://' + __dirname + '/www/index.html',
+	'always-on-top': true
 };
 
 exports.stream = 'https://twitch.tv/rocketbeanstv';
