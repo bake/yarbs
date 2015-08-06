@@ -79,7 +79,7 @@ var updateNotifications = function() {
 };
 
 var showNotification = function(node, id) {
-	var icon  = node.querySelector('.icon');
+	var icon = node.querySelector('.icon');
 
 	icon.classList.add('ion-android-notifications');
 };
