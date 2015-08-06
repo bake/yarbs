@@ -5,7 +5,8 @@ exports.api = {
 };
 
 exports.menubar = {
-	index: 'file://' + process.cwd() + '/www/index.html'
+	'always-on-top': true,
+	'index': 'file://' + __dirname + '/www/index.html'
 };
 
 exports.stream = 'https://twitch.tv/rocketbeanstv';
