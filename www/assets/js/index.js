@@ -61,7 +61,9 @@ var updateProgress = function() {
 	var item     = data.schedule[0];
 	var done     = (moment().format('X') - moment(item.timeStart).format('X'));
 	var percent  = 100 / item.length * done;
-	var progress = '-webkit-gradient(linear, left top, right top, color-stop(' + percent + '%, rgba(0, 0, 0, .15)), color-stop(' + percent + '%, transparent))';
+	var progress = '-webkit-gradient(linear, left top, right top, color-stop('
+	             + percent + '%, rgba(0, 0, 0, .15)), color-stop(' + percent
+							 + '%, transparent))';
 
 	main.querySelector('ul li').style.background = progress;
 };
