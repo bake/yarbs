@@ -3,8 +3,8 @@ var shell    = require('shell');
 var moment   = require('moment');
 var mustache = require('mustache');
 
-var data     = {};
-var timer    = null;
+var data;
+var timer;
 var style    = document.createElement('style');
 var main     = document.querySelector('#main');
 var viewIcon = document.querySelector('.icon-toggle-view');
