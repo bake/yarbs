@@ -4,13 +4,11 @@ var moment   = require('moment');
 var mustache = require('mustache');
 
 var data     = {};
-var notifies = [];
+var timer    = null;
 var style    = document.createElement('style');
 var main     = document.querySelector('#main');
 var viewIcon = document.querySelector('.icon-toggle-view');
-var tpls     = {
-	list: document.querySelector('#tpl-list').innerHTML
-};
+var listTpl  = document.querySelector('#tpl-list').innerHTML;
 
 document.head.appendChild(style);
 
@@ -27,17 +25,24 @@ var initLinks = function() {
 var initTimer = function(item) {
 	var timeEnd = (moment(item.timeEnd).format('X') - moment().format('X')) * 1000;
 
-	setTimeout(function() {
+	clearTimeout(timer);
+
+	timer = setTimeout(function() {
 		var list = main.querySelector('.list');
 		var node = list.querySelector('.item');
 
-		data.schedule.splice(0, 1);
-		initTimer(data.schedule[0]);
-		deleteNotification(node, item.id);
-		list.removeChild(node);
+		if(data.schedule.length > 0) {
+			list.removeChild(node);
+			data.schedule.splice(0, 1);
+		}
 
-		if(storage.filter('notifies', { id: data.schedule[0].id }).length > 0) {
-			deleteNotification(list.querySelector('.item'), data.schedule[0].id);
+		if(data.schedule.length > 0) {
+			initTimer(data.schedule[0]);
+
+			if(storage.filter('notifies', { id: data.schedule[0].id }).length > 0) {
+				ipc.send('notify', data.schedule[0]);
+				hideNotification(node, data.schedule[0].id);
+			}
 		}
 	}, timeEnd);
 };
@@ -52,19 +57,6 @@ var updateTime = function() {
 	});
 };
 
-var updateNotifications = function() {
-	var id;
-	var icon;
-
-	[].forEach.call(main.querySelectorAll('ul li'), function(node) {
-		id = node.getAttribute('data-id');
-
-		if(storage.filter('notifies', { id: parseInt(id) }).length > 0) {
-			addNotification(node, id);
-		}
-	});
-};
-
 var updateProgress = function() {
 	var item     = data.schedule[0];
 	var done     = (moment().format('X') - moment(item.timeStart).format('X'));
@@ -74,82 +66,76 @@ var updateProgress = function() {
 	main.querySelector('ul li').style.background = progress;
 };
 
+var updateNotifications = function() {
+	var id;
+
+	[].forEach.call(main.querySelectorAll('ul li'), function(node) {
+		id = parseInt(node.getAttribute('data-id'));
+
+		if(storage.filter('notifies', { id: id }).length > 0) {
+			showNotification(node, id);
+		}
+	});
+};
+
+var showNotification = function(node, id) {
+	var icon  = node.querySelector('.icon');
+
+	icon.classList.add('ion-android-notifications');
+};
+
+var hideNotification = function(node, id) {
+	var icon = node.querySelector('.icon');
+
+	icon.classList.remove('ion-android-notifications');
+};
+
 var update = function() {
 	ipc.send('schedule');
 };
 
 var toggleView = function() {
-	var view = storage.get('view');
+	storage.set('view', (storage.get('view') == 'simple') ? 'all' : 'simple');
 
-	if(view.length == 0) {
-		view = 'simple';
-		storage.set('view', view);
-	}
-
-	if(view == 'simple') {
-		view = 'all';
-	} else if(view == 'all') {
-		view = 'simple';
-	}
-
-	setView(view);
+	setView(storage.get('view'));
 };
 
 var setView = function(view) {
-	if(view == 'simple') {
-		style.sheet.insertRule('.item .show { height: 0!important; opacity: 0; }', 0);
-
-		storage.set('view', view);
-		viewIcon.classList.add('ion-ios-glasses-outline');
-		viewIcon.classList.remove('ion-ios-glasses');
-	} else if(view == 'all') {
-		if(style.sheet.rules.length > 0) {
-			for(var i = style.sheet.rules.length - 1; i >= 0; i--) {
-				style.sheet.deleteRule(i);
-			}
-		}
-
-		storage.set('view', view);
-		viewIcon.classList.add('ion-ios-glasses');
-		viewIcon.classList.remove('ion-ios-glasses-outline');
+	if(storage.get('view') == 'simple') {
+		showViewSimple();
+	} else if(storage.get('view') == 'all') {
+		showViewAll();
 	}
+};
+
+var showViewAll = function() {
+	if(style.sheet.rules.length > 0) {
+		for(var i = style.sheet.rules.length - 1; i >= 0; i--) {
+			style.sheet.deleteRule(i);
+		}
+	}
+
+	viewIcon.classList.add('ion-ios-glasses');
+	viewIcon.classList.remove('ion-ios-glasses-outline');
+};
+
+var showViewSimple = function() {
+	style.sheet.insertRule('.item .show { height: 0!important; opacity: 0; }', 0);
+
+	viewIcon.classList.add('ion-ios-glasses-outline');
+	viewIcon.classList.remove('ion-ios-glasses');
 };
 
 var toggleNotification = function(node, id) {
-	if(notifies[id] !== undefined) {
-		deleteNotification(node, id);
-	} else {
-		storage.add('notifies', { id: parseInt(id) });
-		addNotification(node, id);
+	id = parseInt(id);
+
+	if(storage.filter('notifies', { id: id }).length > 0) {
+		hideNotification(node, id);
+		storage.deleteFilter('notifies', { id: id });
+	} else if(data.schedule[0].id != id) {
+		showNotification(node, id);
+		storage.add('notifies', getItem(id));
 	}
-};
-
-var deleteNotification = function(node, id) {
-	var icon = node.querySelector('.icon');
-
-	notifies[id] = undefined;
-
-	clearInterval(notifies[id]);
-
-	storage.deleteFilter('notifies', { id: parseInt(id) });
-	icon.classList.remove('ion-android-notifications');
-};
-
-var addNotification = function(node, id) {
-	var icon  = node.querySelector('.icon');
-	var item  = getItem(id);
-	var sleep = (moment(item.timeStart).format('X') - moment().format('X')) * 1000;
-
-	if(sleep < 0) {
-		return;
-	}
-
-	icon.classList.add('ion-android-notifications');
-
-	notifies[id] = setTimeout(function() {
-		ipc.send('notify', item);
-		deleteNotification(icon, item.id);
-	}, sleep, icon, item);
 };
 
 var getItem = function(id) {
@@ -162,13 +148,13 @@ ipc.on('schedule', function(json) {
 	data = JSON.parse(json);
 
 	data.schedule.forEach(function(item) {
-		item.time = moment(item.timeStart).format('H:mm');
+		item.time     = moment(item.timeStart).format('H:mm');
 		item.relative = moment(item.timeStart).fromNow();
-		item.live = ~item.type.indexOf('live');
+		item.live     = ~item.type.indexOf('live');
 		item.premiere = ~item.type.indexOf('premiere');
 	});
 
-	main.innerHTML = mustache.render(tpls.list, data);
+	main.innerHTML = mustache.render(listTpl, data);
 
 	updateTime();
 	updateProgress();
@@ -181,8 +167,10 @@ update();
 initLinks();
 
 setInterval(function() {
-	updateTime();
-	updateProgress();
+	if(data.schedule.length > 0) {
+		updateTime();
+		updateProgress();
+	}
 }, 30000);
 
 setInterval(update, 300000);
