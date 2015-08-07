@@ -45,7 +45,7 @@ var initTimer = function(item) {
 				hideNotification(list.querySelector('.item'), data.schedule[0].id);
 			}
 		} else {
-			ipc.send('icon', '');
+			ipc.send('icon', 'icon');
 		}
 	}, timeEnd);
 };
@@ -165,10 +165,11 @@ ipc.on('schedule', function(json) {
 	updateTime();
 	updateProgress();
 	updateNotifications();
-	initTimer(data.schedule[0]);
 	setView(storage.get('view') || 'simple');
 
-	ipc.send('icon', data.schedule[0].icon);
+	if(data.schedule.length > 0) {
+		initTimer(data.schedule[0]);
+	}
 });
 
 update();
