@@ -1,9 +1,13 @@
 // out: index.css, sourcemap: true, compress: true
 
+color-red = #e63124
+color-green = #40c41e
+
 html, body, #main
 	height 100%
 
 body
+	cursor default
 	background #444
 
 #main
@@ -22,8 +26,18 @@ body
 			height 18px
 			transition all .15s
 
+	.item
+		border-left 5px solid transparent
+
+		&.live
+			border-left-color color-red
+
+		&.premiere
+			border-left-color color-green
+
 	.item-note
 		text-align right
+
 
 .tabs
 	.tab-item
@@ -34,4 +48,4 @@ body
 .tabs-background-assertive
 	.tabs
 		border-color rgba(0, 0, 0, .1)
-		background-color #E63124
+		background-color color-red
