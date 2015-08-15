@@ -23,7 +23,7 @@
 		<script id="tpl-list" type="x-tmpl-mustache">
 			<ul class="list">
 				{{#schedule}}
-				<li data-id="{{id}}" class="item item-icon-right" onclick="toggleNotification(this, {{id}})">
+				<li data-id="{{id}}" class="item item-icon-right {{icon}}" onclick="toggleNotification(this, {{id}})">
 					<i class="icon"></i>
 					{{title}}
 
@@ -32,12 +32,7 @@
 						<small class="show">{{time}}</small>
 					</span>
 
-					<small class="show">{{show}} {{type}} {{game}}</small>
-
-					<!--
-					{{#live}}<span class="badge badge-balanced">Live</span>{{/live}}
-					{{#premiere}}<span class="badge badge-assertive">Premiere</span>{{/premiere}}
-					-->
+					<small class="show">{{show}} {{game}}</small>
 				</li>
 				{{/schedule}}
 			</ul>
