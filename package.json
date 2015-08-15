@@ -17,8 +17,8 @@
     "electron-packager": "^5.0.1"
   },
   "scripts": {
-    "build": "electron-packager . yarbs --platform=darwin --arch=x64 --version=0.30.2 --ignore=node_modules/electron-* --icon=www/icon/Icon.icns --overwrite",
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-packager . yarbs --platform=darwin --arch=x64 --version=0.30.2 --ignore=node_modules/electron-* --icon=www/assets/icon/Icon.icns --overwrite"
   },
   "author": "bake",
   "license": "WTFPL"
