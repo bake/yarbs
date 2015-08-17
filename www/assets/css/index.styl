@@ -11,8 +11,16 @@ body
 	background #444
 
 #main
+	position relative
 	overflow-y scroll
-	padding-bottom 44px
+
+.bar
+	&.bar-banner
+		height auto
+		padding 0
+
+		img
+			width 100%
 
 .list
 	&, .item
@@ -20,11 +28,15 @@ body
 		border-color rgba(0, 0, 0, .15)
 		background transparent
 
-		.show
+		.desc
 			overflow hidden
 			display block
-			height 18px
+			height 0
 			transition all .15s
+
+		.item
+			&:hover .desc, .desc.show
+				height 18px
 
 	.item
 		border-left 5px solid transparent

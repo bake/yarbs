@@ -5,12 +5,9 @@ var mustache = require('mustache');
 
 var data;
 var timer;
-var style    = document.createElement('style');
 var main     = document.querySelector('#main');
 var viewIcon = document.querySelector('.icon-toggle-view');
 var listTpl  = document.querySelector('#tpl-list').innerHTML;
-
-document.head.appendChild(style);
 
 var initLinks = function() {
 	[].forEach.call(document.querySelectorAll('a[target=_blank]'), function(link) {
@@ -114,18 +111,19 @@ var setView = function(view) {
 };
 
 var showViewAll = function() {
-	if(style.sheet.rules.length > 0) {
-		for(var i = style.sheet.rules.length - 1; i >= 0; i--) {
-			style.sheet.deleteRule(i);
-		}
-	}
+	[].forEach.call(main.querySelectorAll('.desc'), function(desc) {
+		desc.classList.add('show');
+	});
+
 
 	viewIcon.classList.add('ion-ios-glasses');
 	viewIcon.classList.remove('ion-ios-glasses-outline');
 };
 
 var showViewSimple = function() {
-	style.sheet.insertRule('.item .show { height: 0!important; opacity: 0; }', 0);
+	[].forEach.call(main.querySelectorAll('.desc'), function(desc) {
+		desc.classList.remove('show');
+	});
 
 	viewIcon.classList.add('ion-ios-glasses-outline');
 	viewIcon.classList.remove('ion-ios-glasses');
