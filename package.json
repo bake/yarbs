@@ -3,6 +3,10 @@
   "version": "0.1.4",
   "description": "yet another rocketbeanstv sendeplan",
   "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BakeRolls/yarbs.git"
+  },
   "dependencies": {
     "electron-positioner": "^2.0.1",
     "http": "",
