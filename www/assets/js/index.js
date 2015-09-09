@@ -6,7 +6,7 @@ var mustache = require('mustache');
 var data;
 var timer;
 var view       = 'schedule';
-var divider    = ['Heute', 'Morgen', '&Uuml;bermorgen'];
+var divider    = ['Heute', 'Morgen'];
 var main       = document.querySelector('#main');
 var listTpl    = document.querySelector('#tpl-list').innerHTML;
 var aboutTpl   = document.querySelector('#tpl-about').innerHTML;
@@ -148,16 +148,19 @@ ipc.on('schedule', function(json) {
 	var days = [];
 
 	data.schedule.forEach(function(item) {
-		var delta = moment(item.timeStart).diff(moment(), 'days');
+		var delta = moment(item.timeStart).dayOfYear() - moment().dayOfYear();
 
 		if(!(delta in days)) days[delta] = {
 			delta: delta,
-			date: (divider[delta]) ? divider[delta] : 'Irgendwann',
+			date: (divider[delta]) ? divider[delta] : moment(item.timeStart).format('DD.MM.YYYY'),
 			data: []
 		};
 
 		days[delta].data.push(item);
+		console.log(delta);
 	});
+
+	console.log(JSON.stringify(days.length));
 
 	view = 'schedule';
 	main.innerHTML = mustache.render(listTpl, days);
