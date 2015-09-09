@@ -12,7 +12,11 @@ exports.icons = {
 
 exports.menubar = {
 	icon: exports.icons.icon,
+	transparent: true,
 	index: 'file://' + __dirname + '/www/index.html',
+	preloadWindow: true,
+	'min-width': 350,
+	'min-height': 200,
 	'always-on-top': true
 };
 
