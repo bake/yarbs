@@ -3,7 +3,7 @@
 	<head>
 		<title>YARBS</title>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Sans:400,700">
-		<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+		<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 		<link rel="stylesheet" href="assets/css/index.css">
 	</head>
 	<body>
@@ -23,12 +23,24 @@
 			</ul>
 		</script>
 
+		<script id="tpl-about" type="x-tmpl-mustache">
+			<ul class="list">
+				<li class="item item-divider"><h1>YARBS</h1></li>
+			</ul>
+
+			<p><i>Yet Another Rocket Beans TV Sendeplan</i> ist eine Open-Source-App, die <a target="_blank" href="http://192k.pw/2015/07/02/offizielle-rbtv-api/">die offizielle API</a> abgreift.</p>
+			<p>Der <a target="_blank" href="https://github.com/BakeRolls/yarbs">Quelltext</a> liegt zusammen mit den <a target="_blank" href="https://github.com/BakeRolls/yarbs/releases">Releases</a> auf GitHub.
+			<p>Es handelt sich hierbei um keine offizielle App.</a></p>
+			<p>Anmerkungen/Fixes k&ouml;nnen gerne an @<a target="_blank" href="https://twitter.com/BakeRolls">BakeRolls</a> oder als <a target="_blank" href="https://github.com/BakeRolls/yarbs/issues">Issue</a> weitergegeben werden.</p>
+			<p><img src="https://i.imgur.com/rai5gjF.jpg" alt="Berndi"></p>
+		</script>
+
 		<script id="tpl-list" type="x-tmpl-mustache">
 			<ul class="list">
 				{{#.}}
 				<li id="#day-{{delta}}" class="item item-divider"><h1>{{date}}</h1></li>
 				{{#data}}
-				<li data-id="{{id}}" class="item item-icon-right {{icon}}" onclick="toggleNotification(this, {{id}})">
+				<li data-id="{{id}}" class="item {{icon}}" onclick="toggleNotification(this, {{id}})">
 					<i class="icon ion-android-radio-button-off"></i>
 
 					<span class="item-note">

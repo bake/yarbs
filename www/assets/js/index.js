@@ -5,9 +5,11 @@ var mustache = require('mustache');
 
 var data;
 var timer;
+var view       = 'schedule';
 var divider    = ['Heute', 'Morgen', '&Uuml;bermorgen'];
 var main       = document.querySelector('#main');
 var listTpl    = document.querySelector('#tpl-list').innerHTML;
+var aboutTpl   = document.querySelector('#tpl-about').innerHTML;
 var buttonsTpl = document.querySelector('#tpl-buttons').innerHTML;
 
 var initLinks = function() {
@@ -18,6 +20,10 @@ var initLinks = function() {
 			shell.openExternal(this.href);
 		}
 	});
+};
+
+var initButtons = function() {
+	main.querySelector('.item.item-divider:first-of-type').innerHTML += buttonsTpl;
 };
 
 var initTimer = function(item) {
@@ -60,13 +66,16 @@ var updateTime = function() {
 
 var updateProgress = function() {
 	var item     = data.schedule[0];
+	var node     = main.querySelector('ul li[data-id]');
+	var icon     = node.querySelector('.icon');
 	var done     = (moment().format('X') - moment(item.timeStart).format('X'));
 	var percent  = 100 / item.length * done;
 	var progress = '-webkit-gradient(linear, left top, right top, color-stop('
 	             + percent + '%, rgba(0, 0, 0, .05)), color-stop(' + percent
 							 + '%, transparent))';
 
-	main.querySelector('ul li[data-id]').style.background = progress;
+	icon.classList.add('ion-ios-play');
+	node.style.background = progress;
 };
 
 var updateNotifications = function() {
@@ -94,7 +103,13 @@ var hideNotification = function(node, id) {
 };
 
 var showAbout = function() {
-	
+	if(view == 'about') return update();
+
+	view = 'about';
+	main.innerHTML = mustache.render(aboutTpl, {});
+
+	initButtons();
+	initLinks();
 };
 
 var update = function() {
@@ -144,10 +159,10 @@ ipc.on('schedule', function(json) {
 		days[delta].data.push(item);
 	});
 
+	view = 'schedule';
 	main.innerHTML = mustache.render(listTpl, days);
 
-	main.querySelector('.item.item-divider:first-of-type').innerHTML += buttonsTpl;
-
+	initButtons();
 	initLinks();
 	updateTime();
 	updateProgress();
