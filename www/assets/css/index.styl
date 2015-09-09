@@ -5,6 +5,7 @@ border-radius = 5px
 color-red = #e63124
 color-green = #40c41e
 border-color = #999
+content-padding = 10px
 
 *
 	margin 0
@@ -21,9 +22,13 @@ html, body
 
 body
 	cursor default
+	line-height 150%
 	font-size .85em
 	font-family 'Droid Sans', sans-serif
 	-webkit-user-select none
+
+img
+	max-width 100%
 
 .popover
 	width calc(100% - 2px)
@@ -50,13 +55,16 @@ body
 	height 100%
 	overflow-y scroll
 
+	p
+		padding content-padding
+
 ul
 	li
 		list-style none
 
 .buttons
 	float right
-	padding 8px 0
+	padding content-padding 0
 
 	li
 		display inline
@@ -64,7 +72,7 @@ ul
 	a
 		color inherit
 		font-size 130%
-		padding 8px 10px
+		padding content-padding
 
 		&:hover
 			color color-red
@@ -72,7 +80,7 @@ ul
 
 .item
 	clear both
-	padding 10px
+	padding content-padding
 	//border-left 2px solid transparent
 
 	&.item-divider
@@ -86,7 +94,7 @@ ul
 		h1
 			font-size 100%
 			font-weight bold
-			padding 10px
+			padding content-padding
 			display inline-block
 
 	&.item-divider:first-of-type
@@ -98,19 +106,20 @@ ul
 	&.premiere .icon
 		color color-green
 
+	&:hover
+		background rgba(0, 0, 0, .05)!important
+
+	&:hover, &:nth-of-type(2)
+		.item-desc small, .item-note small
+			height 14px
+			opacity 1
+
 	.item-desc small, .item-note small
 		height 0
 		opacity 0
 		display block
 		overflow hidden
 		transition all .1s
-
-	&:hover
-		background rgba(0, 0, 0, .05)!important
-
-		.item-desc small, .item-note small
-			height 14px
-			opacity 1
 
 	.item-note
 		float right
