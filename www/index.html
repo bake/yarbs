@@ -2,39 +2,47 @@
 <html>
 	<head>
 		<title>YARBS</title>
-		<link rel="stylesheet" href="http://code.ionicframework.com/1.0.1/css/ionic.min.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Sans:400,700">
+		<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 		<link rel="stylesheet" href="assets/css/index.css">
 	</head>
 	<body>
-		<div id="main"></div>
+	  <section class="popover">
+	    <div id="main"></div>
+	  </section>
 
-		<footer class="tabs-background-assertive tabs-color-light">
-			<div class="tabs tabs-icon-only">
-				<a class="tab-item" onclick="toggleView()"><i class="icon icon-toggle-view ion-ios-glasses"></i></a>
-				<a class="tab-item" onclick="update()"><i class="icon ion-ios-loop"></i></a>
-				<a class="tab-item" target="_blank" href="https://twitter.com/therocketbeans"><i class="icon ion-social-twitter-outline"></i></a>
-				<a class="tab-item" target="_blank" href="https://www.reddit.com/r/rocketbeans"><i class="icon ion-social-reddit-outline"></i></a>
-				<a class="tab-item" target="_blank" href="https://www.youtube.com/user/ROCKETBEANSTV/videos"><i class="icon ion-social-youtube-outline"></i></a>
-				<a class="tab-item" target="_blank" href="https://twitch.tv/rocketbeanstv"><i class="icon ion-social-twitch-outline"></i></a>
-				<a class="tab-item" target="_blank" href="http://www.amazon.de/?_encoding=UTF8&camp=1638&creative=19454&linkCode=ur2&site-redirect=de&tag=rocketbeansde-21&linkId=TS4VQU7BZNNUKCKO"><i class="icon ion-ios-cart-outline"></i></a>
-			</div>
-		</footer>
+		<script id="tpl-buttons" type="x-tmpl-mustache">
+			<ul class="buttons">
+				<li><a class="tab-item" onclick="showAbout()"><i class="icon ion-help"></i></a></li>
+				<li><a class="tab-item" onclick="update()"><i class="icon ion-ios-loop"></i></a></li>
+				<li><a class="tab-item" target="_blank" href="https://twitter.com/therocketbeans"><i class="icon ion-social-twitter-outline"></i></a></li>
+				<li><a class="tab-item" target="_blank" href="https://www.reddit.com/r/rocketbeans"><i class="icon ion-social-reddit-outline"></i></a></li>
+				<li><a class="tab-item" target="_blank" href="https://www.youtube.com/user/ROCKETBEANSTV/videos"><i class="icon ion-social-youtube-outline"></i></a></li>
+				<li><a class="tab-item" target="_blank" href="https://twitch.tv/rocketbeanstv"><i class="icon ion-social-twitch-outline"></i></a></li>
+				<li><a class="tab-item" target="_blank" href="http://www.amazon.de/?_encoding=UTF8&camp=1638&creative=19454&linkCode=ur2&site-redirect=de&tag=rocketbeansde-21&linkId=TS4VQU7BZNNUKCKO"><i class="icon ion-ios-cart-outline"></i></a></li>
+			</ul>
+		</script>
 
 		<script id="tpl-list" type="x-tmpl-mustache">
 			<ul class="list">
-				{{#schedule}}
+				{{#.}}
+				<li id="#day-{{delta}}" class="item item-divider"><h1>{{date}}</h1></li>
+				{{#data}}
 				<li data-id="{{id}}" class="item item-icon-right {{icon}}" onclick="toggleNotification(this, {{id}})">
-					<i class="icon"></i>
-					{{title}}
+					<i class="icon ion-android-radio-button-off"></i>
 
 					<span class="item-note">
 						<time datetime="{{timeStart}}">{{relative}}</time><br>
-						<small class="desc">{{time}}</small>
+						<small>{{time}}</small>
 					</span>
 
-					<small class="desc">{{show}} {{game}}</small>
+					<span class="item-desc">
+						{{title}}<br>
+						<small>{{show}} {{game}}</small>
+					</span>
 				</li>
-				{{/schedule}}
+				{{/data}}
+				{{/.}}
 			</ul>
 		</script>
 

@@ -5,9 +5,11 @@ var mustache = require('mustache');
 
 var data;
 var timer;
-var main     = document.querySelector('#main');
-var viewIcon = document.querySelector('.icon-toggle-view');
-var listTpl  = document.querySelector('#tpl-list').innerHTML;
+var divider    = ['Heute', 'Morgen', '&Uuml;bermorgen'];
+var main       = document.querySelector('#main');
+var viewIcon   = document.querySelector('.icon-toggle-view');
+var listTpl    = document.querySelector('#tpl-list').innerHTML;
+var buttonsTpl = document.querySelector('#tpl-buttons').innerHTML;
 
 var initLinks = function() {
 	[].forEach.call(document.querySelectorAll('a[target=_blank]'), function(link) {
@@ -50,7 +52,7 @@ var initTimer = function(item) {
 var updateTime = function() {
 	var time;
 
-	[].forEach.call(main.querySelectorAll('ul li'), function(item) {
+	[].forEach.call(main.querySelectorAll('ul li[data-id]'), function(item) {
 		time = item.querySelector('time');
 
 		time.innerHTML = moment(time.getAttribute('datetime')).fromNow();
@@ -62,16 +64,16 @@ var updateProgress = function() {
 	var done     = (moment().format('X') - moment(item.timeStart).format('X'));
 	var percent  = 100 / item.length * done;
 	var progress = '-webkit-gradient(linear, left top, right top, color-stop('
-	             + percent + '%, rgba(0, 0, 0, .15)), color-stop(' + percent
+	             + percent + '%, rgba(0, 0, 0, .05)), color-stop(' + percent
 							 + '%, transparent))';
 
-	main.querySelector('ul li').style.background = progress;
+	main.querySelector('ul li[data-id]').style.background = progress;
 };
 
 var updateNotifications = function() {
 	var id;
 
-	[].forEach.call(main.querySelectorAll('ul li'), function(node) {
+	[].forEach.call(main.querySelectorAll('ul li[data-id]'), function(node) {
 		id = parseInt(node.getAttribute('data-id'));
 
 		if(storage.filter('notifies', { id: id }).length > 0) {
@@ -83,13 +85,13 @@ var updateNotifications = function() {
 var showNotification = function(node, id) {
 	var icon = node.querySelector('.icon');
 
-	icon.classList.add('ion-android-notifications');
+	icon.classList.add('ion-android-radio-button-on');
 };
 
 var hideNotification = function(node, id) {
 	var icon = node.querySelector('.icon');
 
-	icon.classList.remove('ion-android-notifications');
+	icon.classList.remove('ion-android-radio-button-on');
 };
 
 var update = function() {
@@ -114,7 +116,6 @@ var showViewAll = function() {
 	[].forEach.call(main.querySelectorAll('.desc'), function(desc) {
 		desc.classList.add('show');
 	});
-
 
 	viewIcon.classList.add('ion-ios-glasses');
 	viewIcon.classList.remove('ion-ios-glasses-outline');
@@ -158,8 +159,26 @@ ipc.on('schedule', function(json) {
 		item.icon     = (item.live) ? 'live' : (item.premiere) ? 'premiere' : 'icon';
 	});
 
-	main.innerHTML = mustache.render(listTpl, data);
+	var days = [];
 
+	data.schedule.forEach(function(item) {
+		var delta = moment(item.timeStart).diff(moment(), 'days');
+
+		if(!(delta in days)) days[delta] = {
+			delta: delta,
+			date: (divider[delta]) ? divider[delta] : 'Irgendwann',
+			data: []
+		};
+
+		days[delta].data.push(item);
+	});
+
+	main.innerHTML = mustache.render(listTpl, days);
+
+	viewIcon = document.querySelector('.icon-toggle-view');
+	main.querySelector('.item.item-divider:first-of-type').innerHTML += buttonsTpl;
+
+	initLinks();
 	updateTime();
 	updateProgress();
 	updateNotifications();
@@ -171,7 +190,6 @@ ipc.on('schedule', function(json) {
 });
 
 update();
-initLinks();
 
 setInterval(function() {
 	if(data.schedule.length > 0) {
