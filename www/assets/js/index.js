@@ -7,7 +7,6 @@ var data;
 var timer;
 var divider    = ['Heute', 'Morgen', '&Uuml;bermorgen'];
 var main       = document.querySelector('#main');
-var viewIcon   = document.querySelector('.icon-toggle-view');
 var listTpl    = document.querySelector('#tpl-list').innerHTML;
 var buttonsTpl = document.querySelector('#tpl-buttons').innerHTML;
 
@@ -94,40 +93,12 @@ var hideNotification = function(node, id) {
 	icon.classList.remove('ion-android-radio-button-on');
 };
 
+var showAbout = function() {
+	
+};
+
 var update = function() {
 	ipc.send('schedule');
-};
-
-var toggleView = function() {
-	storage.set('view', (storage.get('view') == 'simple') ? 'all' : 'simple');
-
-	setView(storage.get('view'));
-};
-
-var setView = function(view) {
-	if(storage.get('view') == 'simple') {
-		showViewSimple();
-	} else if(storage.get('view') == 'all') {
-		showViewAll();
-	}
-};
-
-var showViewAll = function() {
-	[].forEach.call(main.querySelectorAll('.desc'), function(desc) {
-		desc.classList.add('show');
-	});
-
-	viewIcon.classList.add('ion-ios-glasses');
-	viewIcon.classList.remove('ion-ios-glasses-outline');
-};
-
-var showViewSimple = function() {
-	[].forEach.call(main.querySelectorAll('.desc'), function(desc) {
-		desc.classList.remove('show');
-	});
-
-	viewIcon.classList.add('ion-ios-glasses-outline');
-	viewIcon.classList.remove('ion-ios-glasses');
 };
 
 var toggleNotification = function(node, id) {
@@ -175,14 +146,12 @@ ipc.on('schedule', function(json) {
 
 	main.innerHTML = mustache.render(listTpl, days);
 
-	viewIcon = document.querySelector('.icon-toggle-view');
 	main.querySelector('.item.item-divider:first-of-type').innerHTML += buttonsTpl;
 
 	initLinks();
 	updateTime();
 	updateProgress();
 	updateNotifications();
-	setView(storage.get('view') || 'simple');
 
 	if(data.schedule.length > 0) {
 		initTimer(data.schedule[0]);
