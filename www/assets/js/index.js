@@ -178,6 +178,7 @@ ipc.on('schedule', function(json) {
 
 	view = 'schedule';
 	main.innerHTML = mustache.render(listTpl, days);
+	showPlay(main.querySelector('.item[data-id] .icon'));
 
 	initMenu('YARBS');
 	initLinks();
