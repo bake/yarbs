@@ -10,6 +10,7 @@ var divider    = ['Heute', 'Morgen'];
 var main       = document.querySelector('#main');
 var listTpl    = document.querySelector('#tpl-list').innerHTML;
 var aboutTpl   = document.querySelector('#tpl-about').innerHTML;
+var errorTpl   = document.querySelector('#tpl-error').innerHTML;
 var buttonsTpl = document.querySelector('#tpl-buttons').innerHTML;
 
 var initLinks = function() {
@@ -134,6 +135,13 @@ var getItem = function(id) {
 	})[0];
 };
 
+ipc.on('error', function(error) {
+	main.innerHTML = mustache.render(errorTpl, {
+		title: 'Fehler: ' + error.errno,
+		message: 'Fehler: ' + error.errno
+	});
+});
+
 ipc.on('schedule', function(json) {
 	data = JSON.parse(json);
 
@@ -157,10 +165,7 @@ ipc.on('schedule', function(json) {
 		};
 
 		days[delta].data.push(item);
-		console.log(delta);
 	});
-
-	console.log(JSON.stringify(days.length));
 
 	view = 'schedule';
 	main.innerHTML = mustache.render(listTpl, days);

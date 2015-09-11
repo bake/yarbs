@@ -8,19 +8,21 @@ var config  = require('./config');
 var mb = menubar(config.menubar);
 
 ipc.on('schedule', function(event) {
-  rbtv.get('schedule', function(json) {
-  	event.sender.send('schedule', json);
-  });
+	rbtv.get('schedule', function(json) {
+		event.sender.send('schedule', json);
+	}, function(error) {
+		event.sender.send('error', error);
+	});
 });
 
 ipc.on('notify', function(event, item) {
-  notify.notify({
-    title: item.title,
-    message: item.show,
-    sound: true
-  });
+	notify.notify({
+		title: item.title,
+		message: item.show,
+		sound: true
+	});
 });
 
 ipc.on('icon', function(event, icon) {
-  mb.tray.setImage(config.icons[icon]);
+	mb.tray.setImage(config.icons[icon]);
 });

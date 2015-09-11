@@ -106,8 +106,8 @@ ul
 	&.premiere .icon
 		color color-green
 
-	&:hover
-		background rgba(0, 0, 0, .05)!important
+	&[data-id]:hover
+		background rgba(0, 0, 0, .05)
 
 	&:hover, &:nth-of-type(2)
 		.item-desc small, .item-note small
@@ -126,3 +126,8 @@ ul
 		opacity .75
 		font-size 90%
 		text-align right
+
+	.item-reload
+		padding 20px 0
+		font-size 180%
+		text-align center
