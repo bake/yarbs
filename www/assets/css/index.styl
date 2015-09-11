@@ -62,6 +62,18 @@ ul
 	li
 		list-style none
 
+.loading-item
+	font-size 500%
+	text-align center
+	cursor pointer
+	height calc(100% - 20px)
+	display flex
+	align-items center
+	justify-content center
+
+	i
+		animation rotate 1s infinite
+
 .buttons
 	float right
 	padding content-padding 0
@@ -131,3 +143,10 @@ ul
 		padding 20px 0
 		font-size 180%
 		text-align center
+
+@keyframes rotate
+	from
+		transform rotate(0deg)
+
+	to
+		transform rotate(180deg)
