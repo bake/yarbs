@@ -113,7 +113,7 @@ var showPlay = function(icon) {
 };
 
 var showAbout = function() {
-	if(view == 'about') return update();
+	if(view == 'about') return update(true);
 
 	view = 'about';
 	main.innerHTML = mustache.render(aboutTpl, {});
@@ -121,9 +121,14 @@ var showAbout = function() {
 	initLinks();
 };
 
-var update = function() {
+var update = function(silent) {
+	silent = silent || false;
+
 	ipc.send('schedule');
-	main.innerHTML = mustache.render(loadingTpl, {});
+
+	if(!silent) {
+		main.innerHTML = mustache.render(loadingTpl, {});
+	}
 };
 
 var toggleNotification = function(node, id) {
