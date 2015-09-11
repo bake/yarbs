@@ -1,6 +1,6 @@
 {
 	"name": "yarbs",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"description": "yet another rocketbeanstv sendeplan",
 	"main": "main.js",
 	"repository": {
