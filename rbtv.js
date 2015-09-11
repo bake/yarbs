@@ -11,7 +11,7 @@ var base64encode = function(str) {
 	return new Buffer(str).toString('base64')
 };
 
-exports.get = function(endpoint, callback) {
+exports.get = function(endpoint, success, fail) {
 	var user    = config.api.user;
 	var salt    = config.api.salt;
 	var id      = config.api.id;
@@ -20,22 +20,24 @@ exports.get = function(endpoint, callback) {
 	var sha1    = sha1h(nonce + created + salt);
 
 	http.request({
-	  host: 'api.rocketmgmt.de',
-	  path: '/' + endpoint,
-	  headers: {
+		host: 'api.rocketmgmt.de',
+		path: '/' + endpoint,
+		headers: {
 			'Accept': 'application/json',
 			'Authorization': 'WSSE profile="UsernameToken"',
 			'X-WSSE': 'UsernameToken Username="' + user + '", PasswordDigest="' + base64encode(sha1) + '", Nonce="' + base64encode(nonce) + '", Created="' + created + '"'
 		}
 	}, function(response) {
-	  var json = ''
+		var json = ''
 
-	  response.on('data', function (chunk) {
-	    json += chunk;
-	  });
+		response.on('data', function (chunk) {
+			json += chunk;
+		});
 
-	  response.on('end', function () {
-	    callback(json);
-	  });
+		response.on('end', function () {
+			success(json);
+		});
+	}).on('error', function(error) {
+		fail(error);
 	}).end();
 };

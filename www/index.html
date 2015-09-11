@@ -35,6 +35,14 @@
 			<p><img src="https://i.imgur.com/rai5gjF.jpg" alt="Berndi"></p>
 		</script>
 
+		<script id="tpl-error" type="x-tmpl-mustache">
+			<ul class="list">
+				<li class="item item-divider"><h1>{{title}}</h1></li>
+				<li onclick="update()"><img src="https://i.imgur.com/rai5gjF.jpg" alt="Berndi"></li>
+				<li class="item item-reload" onclick="update()">Neu laden</li>
+			</ul>
+		</script>
+
 		<script id="tpl-list" type="x-tmpl-mustache">
 			<ul class="list">
 				{{#.}}
