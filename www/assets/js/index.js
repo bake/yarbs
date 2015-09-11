@@ -8,10 +8,11 @@ var timer;
 var view       = 'schedule';
 var divider    = ['Heute', 'Morgen'];
 var main       = document.querySelector('#main');
+var menu       = document.querySelector('#menu');
+var menuTpl    = document.querySelector('#tpl-menu').innerHTML;
 var listTpl    = document.querySelector('#tpl-list').innerHTML;
 var aboutTpl   = document.querySelector('#tpl-about').innerHTML;
 var errorTpl   = document.querySelector('#tpl-error').innerHTML;
-var buttonsTpl = document.querySelector('#tpl-buttons').innerHTML;
 
 var initLinks = function() {
 	[].forEach.call(document.querySelectorAll('a[target=_blank]'), function(link) {
@@ -23,8 +24,10 @@ var initLinks = function() {
 	});
 };
 
-var initButtons = function() {
-	main.querySelector('.item.item-divider:first-of-type').innerHTML += buttonsTpl;
+var initMenu = function(title) {
+	menu.innerHTML = mustache.render(menuTpl, {
+		title: title
+	});
 };
 
 var initTimer = function(item) {
@@ -109,12 +112,12 @@ var showAbout = function() {
 	view = 'about';
 	main.innerHTML = mustache.render(aboutTpl, {});
 
-	initButtons();
 	initLinks();
 };
 
 var update = function() {
 	ipc.send('schedule');
+	main.innerHTML = '';
 };
 
 var toggleNotification = function(node, id) {
@@ -170,11 +173,12 @@ ipc.on('schedule', function(json) {
 	view = 'schedule';
 	main.innerHTML = mustache.render(listTpl, days);
 
-	initButtons();
+	initMenu('YARBS');
 	initLinks();
 	updateTime();
 	updateProgress();
 	updateNotifications();
+	updateDividerPositions();
 
 	if(data.schedule.length > 0) {
 		initTimer(data.schedule[0]);
