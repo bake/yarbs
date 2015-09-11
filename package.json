@@ -1,30 +1,30 @@
 {
-  "name": "yarbs",
-  "version": "0.1.4",
-  "description": "yet another rocketbeanstv sendeplan",
-  "main": "main.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/BakeRolls/yarbs.git"
-  },
-  "dependencies": {
-    "electron-positioner": "^2.0.1",
-    "http": "",
-    "menubar": "^2.0.17",
-    "moment": "^2.10.6",
-    "mu2": "^0.5.20",
-    "mustache": "^2.1.3",
-    "node-notifier": "^4.2.3",
-    "sha1-hex": ""
-  },
-  "devDependencies": {
-    "electron-prebuilt": "^0.30.2",
-    "electron-packager": "^5.0.1"
-  },
-  "scripts": {
-    "start": "electron .",
-    "build": "electron-packager . yarbs --platform=darwin --arch=x64 --version=0.30.2 --ignore=node_modules/electron-* --icon=www/assets/icon/Icon.icns --overwrite"
-  },
-  "author": "bake",
-  "license": "WTFPL"
+	"name": "yarbs",
+	"version": "0.1.4",
+	"description": "yet another rocketbeanstv sendeplan",
+	"main": "main.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/BakeRolls/yarbs.git"
+	},
+	"dependencies": {
+		"electron-positioner": "^2.0.1",
+		"http": "",
+		"menubar": "^2.0.17",
+		"moment": "^2.10.6",
+		"mu2": "^0.5.20",
+		"mustache": "^2.1.3",
+		"node-notifier": "^4.2.3",
+		"sha1-hex": ""
+	},
+	"devDependencies": {
+		"electron-prebuilt": "^0.30.2",
+		"electron-packager": "^5.0.1"
+	},
+	"scripts": {
+		"start": "electron .",
+		"build": "electron-packager . yarbs --platform=darwin --arch=x64 --version=0.30.2 --icon=www/assets/icon/Icon.icns --prune --overwrite"
+	},
+	"author": "bake",
+	"license": "WTFPL"
 }
