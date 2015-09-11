@@ -51,7 +51,7 @@ var initTimer = function(item) {
 			if(storage.filter('notifies', { id: data.schedule[0].id }).length > 0) {
 				ipc.send('notify', data.schedule[0]);
 				storage.deleteFilter('notifies', { id: data.schedule[0].id });
-				hideNotification(list.querySelector('.item[data-id]'), data.schedule[0].id);
+				showPlay(list.querySelector('.item[data-id] .icon'));
 			}
 		} else {
 			ipc.send('icon', 'icon');
@@ -62,7 +62,7 @@ var initTimer = function(item) {
 var updateTime = function() {
 	var time;
 
-	[].forEach.call(main.querySelectorAll('ul li[data-id]'), function(item) {
+	[].forEach.call(main.querySelectorAll('.item[data-id]'), function(item) {
 		time = item.querySelector('time');
 
 		time.innerHTML = moment(time.getAttribute('datetime')).fromNow();
@@ -71,7 +71,7 @@ var updateTime = function() {
 
 var updateProgress = function() {
 	var item     = data.schedule[0];
-	var node     = main.querySelector('ul li[data-id]');
+	var node     = main.querySelector('.item[data-id]');
 	var icon     = node.querySelector('.icon');
 	var done     = (moment().format('X') - moment(item.timeStart).format('X'));
 	var percent  = 100 / item.length * done;
@@ -79,14 +79,13 @@ var updateProgress = function() {
 	             + percent + '%, rgba(0, 0, 0, .05)), color-stop(' + percent
 							 + '%, transparent))';
 
-	icon.classList.add('ion-ios-play');
 	node.style.background = progress;
 };
 
 var updateNotifications = function() {
 	var id;
 
-	[].forEach.call(main.querySelectorAll('ul li[data-id]'), function(node) {
+	[].forEach.call(main.querySelectorAll('.item[data-id]'), function(node) {
 		id = parseInt(node.getAttribute('data-id'));
 
 		if(storage.filter('notifies', { id: id }).length > 0) {
@@ -105,6 +104,12 @@ var hideNotification = function(node, id) {
 	var icon = node.querySelector('.icon');
 
 	icon.classList.remove('ion-android-radio-button-on');
+};
+
+var showPlay = function(icon) {
+	icon.classList.remove('ion-android-radio-button-on');
+	icon.classList.remove('ion-android-radio-button-off');
+	icon.classList.add('ion-ios-play');
 };
 
 var showAbout = function() {
