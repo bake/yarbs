@@ -40,7 +40,7 @@ var initTimer = function(item) {
 		var list = main.querySelector('.list');
 
 		if(data.schedule.length > 0) {
-			list.removeChild(list.querySelector('.item'));
+			list.removeChild(list.querySelector('.item[data-id]'));
 			data.schedule.splice(0, 1);
 		}
 
@@ -51,7 +51,7 @@ var initTimer = function(item) {
 			if(storage.filter('notifies', { id: data.schedule[0].id }).length > 0) {
 				ipc.send('notify', data.schedule[0]);
 				storage.deleteFilter('notifies', { id: data.schedule[0].id });
-				hideNotification(list.querySelector('.item'), data.schedule[0].id);
+				hideNotification(list.querySelector('.item[data-id]'), data.schedule[0].id);
 			}
 		} else {
 			ipc.send('icon', 'icon');
@@ -179,7 +179,7 @@ ipc.on('schedule', function(json) {
 	updateTime();
 	updateProgress();
 	updateNotifications();
-	updateDividerPositions();
+	//updateDividerPositions();
 
 	if(data.schedule.length > 0) {
 		initTimer(data.schedule[0]);
