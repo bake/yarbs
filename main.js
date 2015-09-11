@@ -7,6 +7,14 @@ var config  = require('./config');
 
 var mb = menubar(config.menubar);
 
+mb.on('ready', function() {
+	mb.tray.setToolTip('YARBS');
+
+	mb.window.on('blur', function() {
+		mb.hideWindow();
+	});
+});
+
 ipc.on('schedule', function(event) {
 	rbtv.get('schedule', function(json) {
 		event.sender.send('schedule', json);
