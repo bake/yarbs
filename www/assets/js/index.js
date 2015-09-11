@@ -13,6 +13,7 @@ var menuTpl    = document.querySelector('#tpl-menu').innerHTML;
 var listTpl    = document.querySelector('#tpl-list').innerHTML;
 var aboutTpl   = document.querySelector('#tpl-about').innerHTML;
 var errorTpl   = document.querySelector('#tpl-error').innerHTML;
+var loadingTpl = document.querySelector('#tpl-loading').innerHTML;
 
 var initLinks = function() {
 	[].forEach.call(document.querySelectorAll('a[target=_blank]'), function(link) {
@@ -117,7 +118,7 @@ var showAbout = function() {
 
 var update = function() {
 	ipc.send('schedule');
-	main.innerHTML = '';
+	main.innerHTML = mustache.render(loadingTpl, {});
 };
 
 var toggleNotification = function(node, id) {
