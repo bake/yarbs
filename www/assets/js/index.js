@@ -47,11 +47,11 @@ var initTimer = function(item) {
 		if(data.schedule.length > 0) {
 			initTimer(data.schedule[0]);
 			ipc.send('icon', data.schedule[0].icon);
+			showPlay(list.querySelector('.item[data-id] .icon'));
 
 			if(storage.filter('notifies', { id: data.schedule[0].id }).length > 0) {
 				ipc.send('notify', data.schedule[0]);
 				storage.deleteFilter('notifies', { id: data.schedule[0].id });
-				showPlay(list.querySelector('.item[data-id] .icon'));
 			}
 		} else {
 			ipc.send('icon', 'icon');
