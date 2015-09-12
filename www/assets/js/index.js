@@ -5,7 +5,9 @@ var mustache = require('mustache');
 
 var data;
 var timer;
+var dividers   = [];
 var view       = 'schedule';
+var title      = 'YARBS';
 var divider    = ['Heute', 'Morgen'];
 var main       = document.querySelector('#main');
 var menu       = document.querySelector('#menu');
@@ -92,6 +94,10 @@ var updateNotifications = function() {
 			showNotification(node, id);
 		}
 	});
+};
+
+var updateDividers = function() {
+	dividers = main.querySelectorAll('.item.item-divider');
 };
 
 var showNotification = function(node, id) {
@@ -185,12 +191,13 @@ ipc.on('schedule', function(json) {
 	main.innerHTML = mustache.render(listTpl, days);
 	showPlay(main.querySelector('.item[data-id] .icon'));
 
-	initMenu('YARBS');
+	initMenu(title);
 	initLinks();
 	updateTime();
 	updateProgress();
+	updateDividers();
+	updateHeadline();
 	updateNotifications();
-	//updateDividerPositions();
 
 	if(data.schedule.length > 0) {
 		initTimer(data.schedule[0]);

@@ -58,6 +58,25 @@ img
 	p
 		padding content-padding
 
+	.list .item
+		&[data-id]:hover
+			background rgba(0, 0, 0, .05)
+
+		&[data-id]:hover, &[data-id]:nth-of-type(2)
+			.item-desc small, .item-note small
+				height 14px
+				opacity .75
+
+		&.item-divider:first-of-type
+			display none
+
+		.item-desc small, .item-note small
+			height 0
+			opacity 0
+			display block
+			overflow hidden
+			transition all .1s
+
 ul
 	li
 		list-style none
@@ -90,7 +109,7 @@ ul
 			color color-red
 			cursor pointer
 
-.item
+.list .item
 	clear both
 	padding content-padding
 	//border-left 2px solid transparent
@@ -117,21 +136,6 @@ ul
 
 	&.premiere .icon
 		color color-green
-
-	&[data-id]:hover
-		background rgba(0, 0, 0, .05)
-
-	&:hover, &:nth-of-type(2)
-		.item-desc small, .item-note small
-			height 14px
-			opacity .75
-
-	.item-desc small, .item-note small
-		height 0
-		opacity 0
-		display block
-		overflow hidden
-		transition all .1s
 
 	.item-note
 		float right
