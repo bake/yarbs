@@ -12,12 +12,12 @@ var base64encode = function(str) {
 };
 
 exports.get = function(endpoint, success, fail) {
-	var user    = config.api.user;
-	var salt    = config.api.salt;
+	var key     = config.api.key;
+	var secret  = config.api.secret;
 	var id      = config.api.id;
 	var created = moment().format("YYYY-MM-DDTHH:mm:ssZZ").trim();
 	var nonce   = id + created + rand(10).trim();
-	var sha1    = sha1h(nonce + created + salt);
+	var sha1    = sha1h(nonce + created + secret);
 
 	http.request({
 		host: 'api.rocketmgmt.de',
@@ -25,7 +25,7 @@ exports.get = function(endpoint, success, fail) {
 		headers: {
 			'Accept': 'application/json',
 			'Authorization': 'WSSE profile="UsernameToken"',
-			'X-WSSE': 'UsernameToken Username="' + user + '", PasswordDigest="' + base64encode(sha1) + '", Nonce="' + base64encode(nonce) + '", Created="' + created + '"'
+			'X-WSSE': 'UsernameToken Username="' + key + '", PasswordDigest="' + base64encode(sha1) + '", Nonce="' + base64encode(nonce) + '", Created="' + created + '"'
 		}
 	}, function(response) {
 		var json = ''
