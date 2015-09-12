@@ -1,7 +1,7 @@
 var updateHeadline = function() {
 	var offset = main.getBoundingClientRect().top;
 
-	for(var i = divider.length - 1; i >= 0; i--) {
+	for(var i = dividers.length - 1; i >= 0; i--) {
 		var clientRect = dividers[i].getBoundingClientRect();
 
 		if(clientRect.top - offset <= 0) {
