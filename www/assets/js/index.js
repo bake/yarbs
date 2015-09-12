@@ -46,17 +46,16 @@ var initTimer = function(item) {
 			data.schedule.splice(0, 1);
 		}
 
+		updateIcon();
+
 		if(data.schedule.length > 0) {
 			initTimer(data.schedule[0]);
-			ipc.send('icon', data.schedule[0].icon);
 			showPlay(list.querySelector('.item[data-id] .icon'));
 
 			if(storage.filter('notifies', { id: data.schedule[0].id }).length > 0) {
 				ipc.send('notify', data.schedule[0]);
 				storage.deleteFilter('notifies', { id: data.schedule[0].id });
 			}
-		} else {
-			ipc.send('icon', 'icon');
 		}
 	}, timeEnd);
 };
@@ -69,6 +68,10 @@ var updateTime = function() {
 
 		time.innerHTML = moment(time.getAttribute('datetime')).fromNow();
 	});
+};
+
+var updateIcon = function() {
+	ipc.send('icon', (data.schedule.length > 0) ? data.schedule[0].icon : 'icon');
 };
 
 var updateProgress = function() {
@@ -194,6 +197,7 @@ ipc.on('schedule', function(json) {
 	initMenu(title);
 	initLinks();
 	updateTime();
+	updateIcon();
 	updateProgress();
 	updateDividers();
 	updateHeadline();
