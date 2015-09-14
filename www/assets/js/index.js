@@ -77,12 +77,9 @@ var updateIcon = function() {
 var updateProgress = function() {
 	var item     = data.schedule[0];
 	var node     = main.querySelector('.item[data-id]');
-	var icon     = node.querySelector('.icon');
 	var done     = (moment().format('X') - moment(item.timeStart).format('X'));
 	var percent  = 100 / item.length * done;
-	var progress = '-webkit-gradient(linear, left top, right top, color-stop('
-	             + percent + '%, rgba(0, 0, 0, .05)), color-stop(' + percent
-							 + '%, transparent))';
+	var progress = 'linear-gradient(to right, #f2f2f2 ' + percent + '%, transparent ' + percent + '%)';
 
 	node.style.background = progress;
 };
