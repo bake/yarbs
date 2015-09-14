@@ -1,5 +1,4 @@
 var ipc     = require('ipc');
-var shell   = require('shell');
 var menubar = require('menubar');
 var notify  = require('node-notifier');
 var rbtv    = require('./rbtv');
