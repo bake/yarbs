@@ -7,17 +7,17 @@ var config  = require('./config');
 
 var mb = menubar(config.menubar);
 
+// https://github.com/atom/electron/blob/master/docs/api/frameless-window.md#limitations
+// http://peter.sh/experiments/chromium-command-line-switches/#enable-transparent-visuals
+mb.app.commandLine.appendSwitch('disable-gpu');
+mb.app.commandLine.appendSwitch('enable-transparent-visuals');
+
 mb.on('ready', function() {
 	mb.tray.setToolTip('YARBS');
 
 	mb.window.on('blur', function() {
 		mb.hideWindow();
 	});
-
-	// https://github.com/atom/electron/blob/master/docs/api/frameless-window.md#limitations
-	// http://peter.sh/experiments/chromium-command-line-switches/#enable-transparent-visuals
-	mb.app.commandLine.appendSwitch('disable-gpu');
-	mb.app.commandLine.appendSwitch('enable-transparent-visuals');
 });
 
 ipc.on('schedule', function(event) {
