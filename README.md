@@ -21,5 +21,3 @@ Nach einem `npm install` sollten nun alle Abhängigkeiten vorhanden sein, um die
 ... kann sie mit `npm start` zum ersten mal gestartet bzw. mit `npm run build` gebaut werden.
 
 Auf welches System das Paket ausgerichtet sein soll, kann in der [`package.json`](https://github.com/BakeRolls/yarbs/blob/master/package.json) in der `build`-Zeile angegeben werden. Was in eurem Fall dort hin gehört, findet sich auf direkt beim [electron-packager](https://github.com/maxogden/electron-packager).
-
-Unter Linux muss Electron mit `--enable-transparent-visuals --disable-gpu` gestartet werden, [damit das Fenster einen transparenten Hintergrund bekommt](https://github.com/atom/electron/blob/master/docs/api/frameless-window.md#limitations).
