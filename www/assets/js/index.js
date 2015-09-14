@@ -3,8 +3,8 @@ var shell    = require('shell');
 var moment   = require('moment');
 var mustache = require('mustache');
 
-var data;
 var timer;
+var data       = {};
 var dividers   = [];
 var view       = 'schedule';
 var title      = 'YARBS';
@@ -81,7 +81,9 @@ var updateProgress = function() {
 	var percent  = 100 / item.length * done;
 	var progress = 'linear-gradient(to right, #f2f2f2 ' + percent + '%, transparent ' + percent + '%)';
 
-	node.style.background = progress;
+	if(node) {
+		node.style.background = progress;
+	}
 };
 
 var updateNotifications = function() {
@@ -208,10 +210,10 @@ ipc.on('schedule', function(json) {
 update();
 
 setInterval(function() {
-	if(data.schedule.length > 0) {
+	if(data.schedule && data.schedule.length > 0) {
 		updateTime();
 		updateProgress();
 	}
-}, 30000);
+}, 1000); // 30000
 
 setInterval(update, 300000);
