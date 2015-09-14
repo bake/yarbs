@@ -194,13 +194,13 @@ ipc.on('schedule', function(json) {
 	showPlay(main.querySelector('.item[data-id] .icon'));
 
 	initMenu(title);
-	initLinks();
 	updateTime();
 	updateIcon();
 	updateProgress();
 	updateDividers();
 	updateHeadline();
 	updateNotifications();
+	initLinks();
 
 	if(data.schedule.length > 0) {
 		initTimer(data.schedule[0]);
@@ -214,6 +214,6 @@ setInterval(function() {
 		updateTime();
 		updateProgress();
 	}
-}, 1000); // 30000
+}, 30000);
 
 setInterval(update, 300000);
