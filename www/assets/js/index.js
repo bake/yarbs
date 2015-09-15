@@ -34,7 +34,7 @@ var initMenu = function(title) {
 };
 
 var initTimer = function(item) {
-	var timeEnd = (moment(item.timeEnd).format('X') - moment().format('X')) * 1000;
+	var timeEnd = (moment(item.timeEnd).format('x') - moment().format('x'));
 
 	clearTimeout(timer);
 
@@ -168,12 +168,35 @@ ipc.on('schedule', function(json) {
 	data = JSON.parse(json);
 
 	data.schedule.forEach(function(item) {
-		item.time     = moment(item.timeStart).format('H:mm');
+		item.time     = moment(item.timeStart).format('H:mm') + ' - ' + moment(item.timeEnd).format('H:mm');
 		item.relative = moment(item.timeStart).fromNow();
 		item.live     = ~item.type.indexOf('live');
 		item.premiere = ~item.type.indexOf('premiere');
 		item.icon     = (item.live) ? 'live' : (item.premiere) ? 'premiere' : 'icon';
 	});
+
+	var temp = [];
+	var timeEnd;
+
+	data.schedule.forEach(function(item) {
+		if(moment(timeEnd).diff(item.timeStart) < 0) {
+			temp.push({
+				id: 0,
+				title: 'Pause',
+				pause: true,
+				length: moment(item.timeStart).diff(timeEnd, 'minute'),
+				time: moment(timeEnd).format('H:mm') + ' - ' + moment(item.timeStart).format('H:mm'),
+				timeStart: timeEnd,
+				timeEnd: item.timeStart
+			});
+		}
+
+		temp.push(item);
+
+		timeEnd = item.timeEnd;
+	});
+
+	data.schedule = temp;
 
 	var days = [];
 
