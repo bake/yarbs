@@ -6,6 +6,7 @@ var mustache = require('mustache');
 var timer;
 var data       = {};
 var dividers   = [];
+var timePause  = 1;
 var view       = 'schedule';
 var title      = 'YARBS';
 var divider    = ['Heute', 'Morgen'];
@@ -179,7 +180,7 @@ ipc.on('schedule', function(json) {
 	var timeEnd;
 
 	data.schedule.forEach(function(item) {
-		if(moment(timeEnd).diff(item.timeStart) < 0) {
+		if(moment(timeEnd).diff(item.timeStart, 'minute') > timePause) {
 			temp.push({
 				id: 0,
 				title: 'Pause',
