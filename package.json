@@ -23,7 +23,7 @@
   },
   "scripts": {
     "start": "electron .",
-    "build": "rm -rf yarbs-*-x64; electron-packager . yarbs --platform=darwin,linux --arch=x64 --version=0.30.2 --ignore='yarbs-*' --icon=www/assets/icon/Icon.icns --prune --asar",
+    "build": "rm -rf yarbs-*-x64; electron-packager . yarbs --platform=darwin,linux --arch=x64 --version=0.30.2 --ignore='yarbs-*' --icon=www/assets/icon/BohnIcon.icns --prune --asar",
     "package": "for arch in yarbs-*-x64; do zip -ry $arch.zip $arch; done"
   },
   "author": "bake",
