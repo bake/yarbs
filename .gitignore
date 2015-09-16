@@ -1,4 +1,6 @@
 node_modules/
 electron/
-yarbs-darwin-x64/
+yarbs-*-*/
 config.js
+.DS_Store
+*.css*
