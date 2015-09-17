@@ -121,6 +121,14 @@ ul
 	& > *
 		padding content-padding
 
+	& > *:first-child
+		flex-grow 1
+
+	& > *:last-child
+		flex-grow 1
+		text-align right
+		align-self flex-end
+
 	label, input, select
 		width calc(50% - content-padding)
 		display inline-block
@@ -148,14 +156,9 @@ ul
 	&.premiere .icon
 		color color-green
 
-	.item-desc
-		flex-grow 1
-
 	.item-note
 		opacity .75
 		font-size 90%
-		text-align right
-		align-self flex-end
 
 	.item-reload
 		padding 20px 0
