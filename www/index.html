@@ -58,17 +58,13 @@
 				{{#pause}}<li class="item item-pause"></li>{{/pause}}
 				{{^pause}}
 				<li data-id="{{id}}" class="item {{icon}}" onclick="toggleNotification(this, {{id}})">
-					<i class="icon ion-android-radio-button-off"></i>
+					<div class="item-desc">
+						<i class="icon ion-android-radio-button-off"></i> {{title}}<br><small>{{show}} {{game}}</small>
+					</div>
 
-					<span class="item-note">
-						<time datetime="{{timeStart}}">{{relative}}</time><br>
-						<small>{{time}}</small>
-					</span>
-
-					<span class="item-desc">
-						{{title}}<br>
-						<small>{{show}} {{game}}</small>
-					</span>
+					<div class="item-note">
+						<time datetime="{{timeStart}}">{{relative}}</time><br><small>{{time}}</small>
+					</div>
 				</li>
 				{{/pause}}
 				{{/data}}

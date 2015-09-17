@@ -113,9 +113,17 @@ ul
 			cursor pointer
 
 .list .item
-	clear both
-	padding content-padding
+	display flex
+	flex-wrap no-wrap
+	flex-direction row
 	//border-left 2px solid transparent
+
+	& > *
+		padding content-padding
+
+	label, input, select
+		width calc(50% - content-padding)
+		display inline-block
 
 	&.item-divider, &.item-pause
 		padding 0
@@ -132,7 +140,7 @@ ul
 			display inline-block
 
 	&.item-divider:first-of-type
-		border-top: none
+		border-top none
 
 	&.live .icon
 		color color-red
@@ -140,11 +148,14 @@ ul
 	&.premiere .icon
 		color color-green
 
+	.item-desc
+		flex-grow 1
+
 	.item-note
-		float right
 		opacity .75
 		font-size 90%
 		text-align right
+		align-self flex-end
 
 	.item-reload
 		padding 20px 0
