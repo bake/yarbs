@@ -116,15 +116,14 @@ ul
 	display flex
 	flex-wrap no-wrap
 	flex-direction row
-	//border-left 2px solid transparent
 
 	& > *
 		padding content-padding
 
-	& > *:first-child
+	& > *:nth-child(1)
 		flex-grow 1
 
-	& > *:last-child
+	& > *:nth-child(2)
 		flex-grow 1
 		text-align right
 		align-self flex-end
