@@ -15,7 +15,7 @@ exports.menubar = {
 	transparent: true,
 	index: 'file://' + __dirname + '/www/index.html',
 	preloadWindow: true,
-	'min-width': 350,
+	'min-width': 375,
 	'min-height': 200,
 	'always-on-top': true
 };
