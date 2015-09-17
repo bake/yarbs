@@ -43,7 +43,7 @@ var initTimer = function(item) {
 		var list = main.querySelector('.list');
 
 		if(data.schedule.length > 0) {
-			list.removeChild(list.querySelector('.item[data-id]'));
+			list.removeChild(list.querySelector('.item-pause, .item[data-id]'));
 			data.schedule.splice(0, 1);
 		}
 
@@ -77,7 +77,7 @@ var updateIcon = function() {
 
 var updateProgress = function() {
 	var item     = data.schedule[0];
-	var node     = main.querySelector('.item[data-id]');
+	var node     = main.querySelector('.item-pause, .item[data-id]');
 	var done     = (moment().format('X') - moment(item.timeStart).format('X'));
 	var percent  = 100 / item.length * done;
 	var progress = 'linear-gradient(to right, #f2f2f2 ' + percent + '%, transparent ' + percent + '%)';
@@ -179,8 +179,9 @@ ipc.on('schedule', function(json) {
 	var temp = [];
 	var timeEnd;
 
-	data.schedule.forEach(function(item) {
-		if(moment(timeEnd).diff(item.timeStart, 'minute') > timePause) {
+	data.schedule.forEach(function(item, i) {
+		if(i > 0 && moment(timeEnd).diff(item.timeStart, 'minute') > timePause) {
+
 			temp.push({
 				id: 0,
 				title: 'Pause',
