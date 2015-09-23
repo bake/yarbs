@@ -4,7 +4,7 @@ Ein RBTV-Sendeplan, der die offizielle API abgreift und so die selben Termine wi
 
 ![Screenshot](/screen.png?raw=true)
 
-Icon by [Many](https://thenounproject.com/term/space-helmet/66004/).
+Icon by [Rem](https://github.com/remhume).
 
 # Installation
 
