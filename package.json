@@ -1,6 +1,6 @@
 {
   "name": "yarbs",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "yet another rocketbeanstv sendeplan",
   "main": "main.js",
   "repository": {
@@ -23,8 +23,8 @@
   },
   "scripts": {
     "start": "electron .",
-    "build": "rm -rf yarbs-*-x64; electron-packager . yarbs --platform=darwin,linux --arch=x64 --version=0.33.1 --ignore='yarbs-*' --icon=www/assets/icon/BohnIcon.icns --prune --asar",
-    "package": "for arch in yarbs-*-x64; do zip -ry $arch.zip $arch; done"
+    "build": "rm -rf yarbs-*-*; electron-packager . yarbs --platform=darwin,linux --arch=x64 --version=0.33.1 --ignore='yarbs-*-*' --icon=www/assets/icon/BohnIcon.icns --asar",
+    "package": "for arch in yarbs-*-*; do zip -ry $arch.zip $arch; done"
   },
   "author": "bake",
   "license": "CC-BY-NC-4.0"
