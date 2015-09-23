@@ -27,5 +27,5 @@
     "package": "for arch in yarbs-*-x64; do zip -ry $arch.zip $arch; done"
   },
   "author": "bake",
-  "license": "WTFPL"
+  "license": "CC BY-NC"
 }
