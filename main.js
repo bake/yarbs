@@ -38,3 +38,7 @@ ipc.on('notify', function(event, item) {
 ipc.on('icon', function(event, icon) {
 	mb.tray.setImage(config.icons[icon]);
 });
+
+ipc.on('quit', function(event) {
+	mb.app.quit();
+});

@@ -158,6 +158,10 @@ var getItem = function(id) {
 	})[0];
 };
 
+var quit = function() {
+	ipc.send('quit');
+};
+
 ipc.on('error', function(error) {
 	main.innerHTML = mustache.render(errorTpl, {
 		title: 'Fehler: ' + error.errno,
