@@ -5,9 +5,9 @@ exports.api = {
 };
 
 exports.icons = {
-	icon: __dirname + '/www/assets/icon/IconTemplate.png',
-	live: __dirname + '/www/assets/icon/IconTemplate_Red.png',
-	premiere: __dirname + '/www/assets/icon/IconTemplate_Green.png'
+	icon: __dirname + '/www/assets/icon/BohnOffTemplate.png',
+	live: __dirname + '/www/assets/icon/BohnOnTemplate.png',
+	premiere: __dirname + '/www/assets/icon/BohnOnTemplate.png'
 };
 
 exports.menubar = {
