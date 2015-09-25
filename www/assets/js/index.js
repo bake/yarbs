@@ -184,8 +184,7 @@ ipc.on('schedule', function(json) {
 	var timeEnd;
 
 	data.schedule.forEach(function(item, i) {
-		if(i > 0 && moment(timeEnd).diff(item.timeStart, 'minute') > timePause) {
-
+		if(i > 0 && moment(item.timeStart).diff(timeEnd, 'minute') > timePause) {
 			temp.push({
 				id: 0,
 				title: 'Pause',
