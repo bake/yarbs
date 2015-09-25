@@ -8,6 +8,8 @@ Icon by [Rem](https://github.com/remhume).
 
 # Installation
 
+Einfach ein [Release](https://github.com/BakeRolls/yarbs/releases) laden und starten. For OS X gibt es eine [Brew Cask](http://caskroom.io/)-Formel: `$ brew cask install yarbs`.
+
 Für Benarichtigungen wird [node-notifier](https://github.com/mikaelbr/node-notifier) verwendet, was eventuell [Abhängigkeiten](https://github.com/mikaelbr/node-notifier#requirements) benötigt.
 
 # Development
