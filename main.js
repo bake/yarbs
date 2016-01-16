@@ -36,7 +36,7 @@ ipc.on('notify', function(event, item) {
 });
 
 ipc.on('icon', function(event, icon) {
-	mb.tray.setImage(config.icons[icon]);
+	mb.tray.setImage(config.icons[icon] || config.icons['icon']);
 });
 
 ipc.on('quit', function(event) {
